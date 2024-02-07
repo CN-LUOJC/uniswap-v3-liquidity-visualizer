@@ -8,7 +8,7 @@ import "./App.css"
 function App(){
    
     const [rpc, setRpc] = useState("");
-    const [address, setAddress] = useState("")
+    const [address, setAddress] = useState({value :""})
     const [state, setState] = useState("empty")
     const [data, setData] = useState()
 
@@ -26,9 +26,10 @@ function App(){
 
     useEffect(()=>{
     
-        if(rpc && address && !data){
+        if(rpc && address.value && !data){
+            
             setState("loading");
-            window.ipcRenderer.invoke("get_data",{ "rpc":rpc,"address": address })
+            window.ipcRenderer.invoke("get_data",{ "rpc":rpc,"address": address.value })
         }
         
     },[address])

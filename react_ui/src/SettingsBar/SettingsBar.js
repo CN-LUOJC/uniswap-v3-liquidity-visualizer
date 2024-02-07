@@ -14,7 +14,7 @@ function SettingsBar(props){
    
    function onSubmitAddress(e){
     e.preventDefault();
-    props.setAddress(document.getElementById("input2").value);
+    props.setAddress({"value":document.getElementById("input2").value});
     }
 
   return(
