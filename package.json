@@ -1,0 +1,39 @@
+{
+  "name": "uniswap_v3_liquidity_optimizer",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "main.js",
+  "build": {
+    "files": [
+      "**/*"
+    ],
+    "extraFiles": [
+      "preloads.js",
+      {
+        "from": "./react_ui/build/",
+        "to": "./resources/ui",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "electron": "electron .",
+    "dist": "electron-builder --win portable",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.2.1",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "electron-is-dev": "^3.0.1",
+    "ethers": "^5.7.2",
+    "jsbi": "^4.3.0"
+  }
+}

@@ -1,0 +1,37 @@
+.mr-sm-2,.my-sm-0  {
+  height:35px;
+  vertical-align: center;
+}
+
+.btn{
+  margin-left:10px;
+  width:100px;
+  text-align: center;
+ 
+}
+
+#input1,#input2{
+  font-size :14px;
+}
+
+#btn2{
+  width:150px;
+  font-size:15px;
+ 
+}
+
+#btn1{
+  font-size:15px;
+}
+
+form {
+  display:flex;
+  margin-left :20px;
+  margin-right :20px;
+
+  margin-bottom:5;
+}
+.navbar {
+  height : 60px;
+}
+
