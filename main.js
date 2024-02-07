@@ -28,6 +28,7 @@ function createWindow() {
     width: 900,
     minWidth: 700,
     height: 600,
+    minHeight:350,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: false,
@@ -44,7 +45,7 @@ function createWindow() {
     mainWindow.removeMenu()
    mainWindow.loadURL(startURL);
   //mainWindow.loadFile("./react_ui/build/index.html");
-  //mainWindow.loadFile("./index.html")
+  
 
   mainWindow.on('closed', () => (mainWindow = null));
 }

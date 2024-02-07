@@ -1,10 +1,12 @@
 #mainContainer{
   min-width:800px;
+ 
 }
 
 .App {
   text-align: center;
   min-width: 400px;
+ 
 }
 
 .App-logo {

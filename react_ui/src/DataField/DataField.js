@@ -11,15 +11,16 @@ function DataField(props){
 console.log(props.state)
 if(props.state === "loading"){ 
   return(
+    <div id="data_container">
     <img src={logo} width={200} className="App-logo" alt="logo" />
            
-      
+    </div>
     )
   }
 
 else if (props.state === "data")
 return(
-  <>
+  <div id="data_container">
    <table className="table">
    <thead>
    <tr>
@@ -47,9 +48,9 @@ return(
     
     
    </table>
-  </>
+  </div>
 )
 else
-  return(<p></p>)
+  return(<div id="data_container"></div>)
 }
 export default DataField;
