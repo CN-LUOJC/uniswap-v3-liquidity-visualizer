@@ -9,16 +9,21 @@ let mainWindow;
 function createWindow(){
 
   ipcMain.handle('get_data', async (event, args) =>  {
-    if(connect(args.rpc)){
+    //console.log(connect(args.rpc))
+    if(await connect(args.rpc)){
       let data = await get_positions(args.address);
       let json = JSON.stringify(data);
 
-      fs.writeFile(path.join(isDev ? '': 
+        fs.writeFile(path.join(isDev ? '': 
         process.env.PORTABLE_EXECUTABLE_DIR,'./positions.json'),
           json, 'utf8', ()=>{});
 
       event.sender.send('get_data',{'data': data});
     }
+    else
+    
+      event.sender.send('get_data',{'data': false});
+    
   });
 
   mainWindow = new BrowserWindow({

@@ -11,9 +11,11 @@ const NON_FONGIBLE_FACTORY_MANAGER =
 
 let provider;
 
-export function connect(provider_url){
+export async function connect(provider_url){
     provider = new ethers.providers.JsonRpcProvider(provider_url);
-    return provider;
+    return await provider._networkPromise.then(()=>{return true }).catch(()=>{()=>{return false}})
+    
+    
 }
 
 async function  get_ids(poolAddress) {

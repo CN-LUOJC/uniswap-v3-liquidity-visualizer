@@ -37,8 +37,8 @@ else if (props.state === "data")
                 <tr>
                     <td >{rows["tickLower"]}</td>
                     <td >{rows["tickUpper"]}</td>
-                    <td >{rows["Pa"]}</td>
-                    <td >{rows["Pb"]}</td>
+                    <td >{1/rows["Pa"]}</td>
+                    <td >{1/rows["Pb"]}</td>
                     <td >{rows["liquidity"]}</td>
                 </tr>
               );

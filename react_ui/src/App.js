@@ -15,22 +15,28 @@ function App(){
   useEffect(() => { 
     
     window.ipcRenderer.on("get_data",(value,args)=>{
-      setState("data")
+      if(args.data){
+        setState("data")
 
-      let positions = args.data;
-      positions.forEach((pos, index) => {
-        positions[index].Pb = 1/(1.0001**pos.tickLower);
-        positions[index].Pa = 1/(1.0001**pos.tickUpper);
-      });
+        let positions = args.data;
+        positions.forEach((pos, index) => {
+          positions[index].Pb = 1/(1.0001**pos.tickLower);
+          positions[index].Pa = 1/(1.0001**pos.tickUpper);
+        });
 
-      setData(positions)
-      console.log(positions)})
+        setData(positions);
+        console.log(positions);
+      }
+      else
+        setState("empty");
+      
+    })
   
     },[]);
 
   useEffect(()=>{
     
-    if(rpc && address.value && !data){
+    if(rpc && address.value && state != "loading"){
       setState("loading");
       window.ipcRenderer.invoke("get_data",{ "rpc":rpc,"address": address.value })
     }

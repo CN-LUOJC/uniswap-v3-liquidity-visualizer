@@ -13,8 +13,8 @@ import {Scatter} from 'react-chartjs-2'
 //import 'bootstrap/dist/js/bootstrap.min.js'; 
 //import 'jquery/dist/jquery.min.js';
 
-const MAX_PRICE = 10000;
-const MIN_PRICE = 10; 
+const MAX_PRICE = 10**15;
+const MIN_PRICE = 10**-15; 
 
 function round_10(val){
   return Math.round(val/10)*10;
@@ -68,20 +68,35 @@ function Charts(props){
   if(props.state === "data"){
 
     let positions = props.data;
-    let range = {"lower":positions[0].Pa<MIN_PRICE ? MIN_PRICE :round_10(positions[0].Pa),
-                  "upper":positions[0].Pb>MAX_PRICE ? MAX_PRICE :round_10(positions[0].Pb)};
+   /* let range = {"lower":positions[0].Pa<MIN_PRICE ? MIN_PRICE :positions[0].Pa,
+                  "upper":positions[0].Pb>MAX_PRICE ? MAX_PRICE :positions[0].Pb};
 
     for(let i=1;i<positions.length;i++){
       if(positions[i].Pa < range.lower && positions[i].Pa > MIN_PRICE )
-        range.lower = round_10(positions[i].Pa)
+        range.lower = positions[i].Pa
 
       if(positions[i].Pb > range.upper && positions[i].Pb < MAX_PRICE)
-        range.upper = round_10(positions[i].Pb)
+        range.upper = positions[i].Pb
+    }*/
+    let n = 0;
+    let sum = 0;
+    for(let i=1;i<positions.length;i++){
+      if(positions[i].Pa > MIN_PRICE ){
+        n++;
+        sum += positions[i].Pa;
+      }
+      if(positions[i].Pb < MAX_PRICE ){
+        n++;
+        sum += positions[i].Pb;
+      }
     }
+    let avg_price = sum/n;
+
+
    
 
     let prices = [];
-    for (let i = range.lower; i <= range.upper; i+=10) {
+    for (let i = avg_price/10; i <= avg_price*10; i+=(i/10)) {
         prices.push(i);
     }
 
@@ -92,11 +107,11 @@ function Charts(props){
     let points_tokens = [];
 
     prices.forEach((x, i) => {
-      points_eth.push({'x':2600/x,'y':x_val[i]})
+      points_eth.push({'x':1/x,'y':x_val[i]})
     });
 
     prices.forEach((x, i) => {
-      points_tokens.push({'x':2600/x,'y':y_val[i]})
+      points_tokens.push({'x':1/x,'y':y_val[i]})
     });
 
 
