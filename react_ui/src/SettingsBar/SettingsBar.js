@@ -18,7 +18,7 @@ function SettingsBar(props){
   }
 
   return(
-      <div className="maincontainer">
+      <div id="nav_container" className="maincontainer">
           <nav class="navbar navbar-icon-top navbar-dark bg-dark">
                     
               <form class="form-inline my-2 my-lg-0" onSubmit={onSubmitRpc}>

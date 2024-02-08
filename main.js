@@ -22,7 +22,7 @@ function createWindow(){
   });
 
   mainWindow = new BrowserWindow({
-    minWidth: 700,
+    minWidth: 750,
     width: 900,
     minHeight: 350,
     height: 600,

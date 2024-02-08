@@ -25,6 +25,8 @@ else if (props.state === "data")
                 <tr>
                     <th key="tt">Lower tick</th>
                     <th key="t">Upper tick</th>
+                    <th key="Pa_h">Lower price</th>
+                    <th key="Pb_h">Upper price</th>
                     <th key="liq">Liquidity</th>
                 </tr>
             </thead>
@@ -33,9 +35,11 @@ else if (props.state === "data")
               {props.data.map((rows) => {
               return(
                 <tr>
-                    <td key="tickLower">{rows["tickLower"]}</td>
-                    <td key="tickUpper">{rows["tickUpper"]}</td>
-                    <td key="liquidity">{rows["liquidity"]}</td>
+                    <td >{rows["tickLower"]}</td>
+                    <td >{rows["tickUpper"]}</td>
+                    <td >{rows["Pa"]}</td>
+                    <td >{rows["Pb"]}</td>
+                    <td >{rows["liquidity"]}</td>
                 </tr>
               );
               })}

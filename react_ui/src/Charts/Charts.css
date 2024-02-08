@@ -1,0 +1,8 @@
+#chart_cont{
+    overflow-y:auto;
+    height:calc(50vh - 35px);
+    padding-top:20px;
+}
+
+
+

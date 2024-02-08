@@ -16,8 +16,15 @@ function App(){
     
     window.ipcRenderer.on("get_data",(value,args)=>{
       setState("data")
-      setData(args.data)
-      console.log(args.data)})
+
+      let positions = args.data;
+      positions.forEach((pos, index) => {
+        positions[index].Pb = 1/(1.0001**pos.tickLower);
+        positions[index].Pa = 1/(1.0001**pos.tickUpper);
+      });
+
+      setData(positions)
+      console.log(positions)})
   
     },[]);
 
