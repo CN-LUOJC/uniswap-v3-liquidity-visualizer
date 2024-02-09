@@ -3,6 +3,7 @@ import SettingsBar from './SettingsBar/SettingsBar';
 import DataField from './DataField/DataField';
 import Charts from './Charts/Charts';
 import './App.css'
+import MovableSeparator from './MovableSeparator/VerticalSeparator';
 
 
 
@@ -100,8 +101,11 @@ function App(){
   return(
       <div className="App">
           <SettingsBar setRpc ={setRpc} fetchData = {fetch_data} saveOpen ={saveOpen} loadOpen={loadOpen}/>
-          <DataField state = {state} data = {data} toggleShow ={toggleShow} addPos={addPos} delPos={delPos}/>
-          <Charts state = {state} data = {data}/>
+          <VerticalSeparator 
+          top = {<DataField state = {state} data = {data} toggleShow ={toggleShow} addPos={addPos} delPos={delPos}/>}
+          bottom = {<Charts state = {state} data = {data}/>}
+          />
+         
       </div>
   )}
 

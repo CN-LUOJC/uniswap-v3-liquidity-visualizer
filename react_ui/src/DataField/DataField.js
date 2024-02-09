@@ -18,6 +18,8 @@ if(props.state === "loading"){
 
 else if (props.state === "show_data")
   return(
+
+
     <div id="data_container">
         <table className="table">
             <thead>
@@ -48,7 +50,7 @@ else if (props.state === "show_data")
                 </tr>
               );
               })}
-             <AddForm addPos = {props.addPos}/>
+             <AddForm {...props}/>
             </tbody>
         </table>
     </div>

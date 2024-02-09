@@ -1,11 +1,7 @@
 #data_container{
-    height:calc(50vh - 35px);
-    overflow-y:auto;
-    overflow-x: hidden;
- 
     
-    border-bottom: solid 1px;
-    border-color: black;
+    overflow:hidden;
+ 
 }
 td {
     background-color: transparent !important;

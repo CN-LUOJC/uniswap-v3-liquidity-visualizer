@@ -1,6 +1,7 @@
 import React from 'react';
 import './Charts.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import {
   Chart as ChartJS,
   LinearScale,

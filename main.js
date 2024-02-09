@@ -80,7 +80,7 @@ function createWindow(){
   
   mainWindow.setTitle('V3 Liquidity Optimizer');
   
-  mainWindow.removeMenu();
+  //mainWindow.removeMenu();
   mainWindow.loadURL(startURL);
   //mainWindow.loadFile("./react_ui/build/index.html");
   mainWindow.on('closed', () => (mainWindow = null));

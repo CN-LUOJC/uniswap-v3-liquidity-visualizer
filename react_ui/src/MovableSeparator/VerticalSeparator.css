@@ -1,0 +1,34 @@
+#drag_container{
+    height:100vh;
+    width:100%;
+    display:flex;
+    flex:auto;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+#top
+{
+    height:80%;
+    overflow-y: auto;
+}
+
+#dragMe {
+    cursor: ns-resize;
+
+    user-select: none;
+    height : 1px;
+    background-color:rgb(189, 189, 189);
+    
+}
+
+
+#bottom{
+    flex:auto;
+    min-height:20%;
+    height:100%;
+    position:relative;
+    width:100%;
+   
+}
