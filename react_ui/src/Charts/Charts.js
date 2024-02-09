@@ -67,7 +67,13 @@ function Charts(props){
   
   if(props.state === "data"){
 
-    let positions = props.data;
+    let positions = [];
+    for(let pos of props.data){
+      if(pos.show)
+        positions.push(pos);
+    }
+    
+    
    /* let range = {"lower":positions[0].Pa<MIN_PRICE ? MIN_PRICE :positions[0].Pa,
                   "upper":positions[0].Pb>MAX_PRICE ? MAX_PRICE :positions[0].Pb};
 
@@ -92,13 +98,12 @@ function Charts(props){
     }
     let avg_price = sum/n;
 
-
-   
-
     let prices = [];
     for (let i = avg_price/10; i <= avg_price*10; i+=(i/10)) {
         prices.push(i);
     }
+
+
 
     let x_val = prices.map((price) => {return x_amount(Math.sqrt(price),positions)});
     let y_val = prices.map((price) => {return y_amount(Math.sqrt(price),positions)});
