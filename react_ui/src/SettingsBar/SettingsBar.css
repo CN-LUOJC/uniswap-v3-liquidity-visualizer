@@ -3,25 +3,17 @@
   vertical-align: center;
 }
 
-.btn{
-  margin-left:10px;
-  width:100px;
-  text-align: center;
- 
-}
 
 #input1,#input2{
   font-size :14px;
+  width: 200px;
+  margin-right :10px;
 }
 
 #btn2{
-  width:150px;
+  width:100px;
   font-size:15px;
  
-}
-
-#btn1{
-  font-size:15px;
 }
 
 form {
@@ -33,5 +25,15 @@ form {
 }
 .navbar {
   height : 70px;
+  align-content: left;
+}
+
+#save {
+  width:70px;
+  margin-left:20px;
+ 
+}
+a{
+  margin-left: 10px;
 }
 

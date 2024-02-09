@@ -1,6 +1,7 @@
 #data_container{
     height:calc(50vh - 35px);
     overflow-y:auto;
+    overflow-x: hidden;
  
     
     border-bottom: solid 1px;
@@ -11,6 +12,8 @@ td {
 }
 .greyed{
     background-color: grey;
-   
+}
 
+a {
+    text-decoration: none;
 }

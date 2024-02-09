@@ -15,10 +15,9 @@ export async function connect(provider_url){
     provider = new ethers.providers.JsonRpcProvider(provider_url);
     return await provider._networkPromise.then(()=>{return true }).catch(()=>{()=>{return false}})
     
-    
 }
 
-async function  get_ids(poolAddress) {
+export async function get_ids(poolAddress) {
 
   return axios.post(
     "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3",
@@ -65,29 +64,29 @@ async function  get_ids(poolAddress) {
     }
 
     return ids_clean;
-  })
+  }).catch(()=>{return false;})
 }
 
-export async function get_positions(poolAddress){
+export async function get_positions(positionsIds){
 
-  let positionIds = await get_ids(poolAddress);
   
   let poolContract = new ethers.Contract(
     NON_FONGIBLE_FACTORY_MANAGER,
     abi,
     provider);
 
-  const positionCalls = [];
-  for (let id of positionIds) {
-    positionCalls.push(
+  const positionsCalls = [];
+  for (let id of positionsIds) {
+    positionsCalls.push(
         poolContract.positions(id)
     )
   }
 
+  const callResponses = await Promise.all(positionsCalls).catch(()=>{
+    return false;
+  })
 
-  const callResponses = await Promise.all(positionCalls)
-
-  const positionInfos = callResponses.map((position) => {
+  const positionsInfos = callResponses.map((position) => {
     return {
       tickLower: position.tickLower,
       tickUpper: position.tickUpper,
@@ -98,15 +97,8 @@ export async function get_positions(poolAddress){
   })
 
 
-  return positionInfos;
+  return positionsInfos;
 }
 
 
-
-function main(){
-    connect("https://ethereum.publicnode.com");
-
-    let liq_pool = "0x331399c614ca67dee86733e5a2fba40dbb16827c";
-    get_positions(liq_pool);
-}
 

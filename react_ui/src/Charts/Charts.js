@@ -38,7 +38,6 @@ function x_amount(sqrtP, positions){
         if (sqrtP <= sqrtPa) 
             x += liq * (sqrtPb - sqrtPa) / (sqrtPa * sqrtPb);
 
-          
     } 
     return x;
 }
@@ -65,7 +64,7 @@ function y_amount(sqrtP, positions){
 function Charts(props){
   
   
-  if(props.state === "data"){
+  if(props.state === "show_data"){
 
     let positions = [];
     for(let pos of props.data){
@@ -104,12 +103,12 @@ function Charts(props){
     }
 
 
-
     let x_val = prices.map((price) => {return x_amount(Math.sqrt(price),positions)});
     let y_val = prices.map((price) => {return y_amount(Math.sqrt(price),positions)});
     
     let points_eth = [];
     let points_tokens = [];
+    let points_var = [];
 
     prices.forEach((x, i) => {
       points_eth.push({'x':1/x,'y':x_val[i]})
@@ -119,37 +118,30 @@ function Charts(props){
       points_tokens.push({'x':1/x,'y':y_val[i]})
     });
 
+    points_var.push({'x':1/prices[1],'y':(1/prices[1]-1/prices[0])/(x_val[1]-x_val[0])})
+    for(let i=1;i<prices.length;i++){
+      points_var.push({'x':1/prices[i],'y':(1/prices[i]-1/prices[i-1])/(x_val[i]-x_val[i-1])})
+    }
 
-    let chartData = {
+
+    let liqData = {
       datasets:[
           {
-              
               label: "ETH",
               showLine:true,
               fill: false,
               backgroundColor: '#ffffff',
               borderColor:"red",
-              //pointBorderColor:'red' ,
-              //pointBackgroundColor: 'red',
-              pointBorderWidth: 0,
-              pointHoverRadius: 0,
-              pointRadius: 0,
               pointHitRadius: 5,
               yAxisID: 'y',
               data: points_eth
           },
           {
-              
             label: "Tokens",
             showLine:true,
             fill: false,
             backgroundColor: '#ffffff',
             borderColor:"blue",
-            //pointBorderColor:'red' ,
-            //pointBackgroundColor: 'red',
-            pointBorderWidth: 0,
-            pointHoverRadius: 0,
-            pointRadius: 0,
             pointHitRadius: 5,
             yAxisID: 'y1',
             data: points_tokens
@@ -157,8 +149,9 @@ function Charts(props){
       ]
   }
 
-  let chartOptions = {
+  let liqOptions = {
     maintainAspectRatio: false,
+    aspectRatio:1,
     plugins: {
       legend: {
           display: false 
@@ -166,7 +159,6 @@ function Charts(props){
   },
     scales: {
         y: {
-          id :"A",
             display: true,
             title: {
               display: true,
@@ -174,7 +166,6 @@ function Charts(props){
             },
         },
         y1:{
-          id:"B",
           display: true,
           position:"right",
           title: {
@@ -194,11 +185,57 @@ function Charts(props){
         },
     }
 }
+
+let varData = {
+  datasets:[
+      {  
+          label: "ETH",
+          showLine:true,
+          fill: false,
+          backgroundColor: '#ffffff',
+          borderColor:"red",
+          pointHitRadius: 5,
+          yAxisID: 'y',
+          data: points_var
+      },
+  ]
+}
+
+let varOptions = {
+maintainAspectRatio: false,
+aspectRatio:1,
+plugins: {
+  legend: {
+      display: false 
+  }
+},
+scales: {
+    y: {
+      type: 'logarithmic',
+        display: true,
+        title: {
+          display: true,
+          
+          text: "Price variation/ETH"
+        },
+    },
+    x: {
+        display: true,
+        title: {
+          display: true,
+          text: "Price(ETH)"
+        },
+    },
+}
+}
   
 
     return(
       <div id="chart_cont">
-        <Scatter id="scatter" data={chartData} options={chartOptions}/>
+        <div className="charts"><Scatter  data={liqData} options={liqOptions} /></div>
+        
+        <div className="charts"><Scatter  data={varData} options={varOptions} /></div>
+        
       </div>
     )
   }

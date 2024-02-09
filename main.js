@@ -1,28 +1,27 @@
 import { app, BrowserWindow,ipcMain } from 'electron';
 import path from 'path';
-import fs from 'fs';
 import isDev from 'electron-is-dev';
-import  {connect,get_positions} from './src/retrieve_positions.mjs';
+import  {connect,get_positions,get_ids} from './src/liquidity_positions.mjs';
 
 let mainWindow;
 
 function createWindow(){
 
   ipcMain.handle('get_data', async (event, args) =>  {
-    //console.log(connect(args.rpc))
     if(await connect(args.rpc)){
-      let data = await get_positions(args.address);
-      let json = JSON.stringify(data);
+      
+      let positionsIds = await get_ids(args.address);
+      if(!positionsIds)
+        return {"error":"Pool address seems invalid..."};
 
-        fs.writeFile(path.join(isDev ? '': 
-        process.env.PORTABLE_EXECUTABLE_DIR,'./positions.json'),
-          json, 'utf8', ()=>{});
+      let data = await get_positions(positionsIds);
+      if(!data)
+        return {"error":"Can't access the address data..."};
 
-      event.sender.send('get_data',{'data': data});
+     return {'data': data, "error":false};
     }
     else
-    
-      event.sender.send('get_data',{'data': false});
+      return {"error":"Can't connect to Rpc provider !"};
     
   });
 
@@ -44,6 +43,7 @@ function createWindow(){
     : `file://${path.join(app.getAppPath(), '../ui/index.html')}`;
   
   mainWindow.setTitle('V3 Liquidity Optimizer');
+  
   mainWindow.removeMenu();
   mainWindow.loadURL(startURL);
   //mainWindow.loadFile("./react_ui/build/index.html");

@@ -1,8 +1,15 @@
 #chart_cont{
-    overflow-y:auto;
-    height:calc(50vh - 35px);
+    overflow:hidden;
     padding-top:20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
 }
+
+.charts{
+    width:50vw;
+    height:calc(50vh - 55px);
+}
+
 
 
 
