@@ -1,11 +1,47 @@
-import { app, BrowserWindow,ipcMain } from 'electron';
+import { app, BrowserWindow,ipcMain ,dialog} from 'electron';
 import path from 'path';
 import isDev from 'electron-is-dev';
+import fs from 'fs';
+
 import  {connect,get_positions,get_ids} from './src/liquidity_positions.mjs';
 
 let mainWindow;
 
 function createWindow(){
+
+  //To avoid base alert input focus issue
+  ipcMain.on('alert',(event,args)=>{ var options = {
+    type: 'error',
+    buttons: ["Ok"],
+    defaultId: 0,
+    cancelId:0,
+    detail:args.alert,
+    message: '',
+    title:"Alert",
+    }
+    dialog.showMessageBox(mainWindow,options)
+  })
+
+  ipcMain.on('save_data',(event,args)=>{ 
+    
+    var options = {
+    defaultPath:"positions.json",
+    filters: [
+      { name: 'Json file', extensions: ['json'] },
+    ],
+    title:"Save as...",
+    }
+
+    dialog.showSaveDialog(mainWindow,options).then((result)=>{
+      let json = JSON.stringify(args.data);
+      if(result.filePath)
+        fs.writeFile(result.filePath,
+        json, 'utf8', ()=>{console.log});
+    })
+  })
+ 
+   
+ 
 
   ipcMain.handle('get_data', async (event, args) =>  {
     if(await connect(args.rpc)){

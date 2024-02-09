@@ -1,8 +1,9 @@
-import React,{useEffect, useState}  from 'react';
+import React,{useState}  from 'react';
 import SettingsBar from './SettingsBar/SettingsBar';
 import DataField from './DataField/DataField';
 import Charts from './Charts/Charts';
 import './App.css'
+
 
 
 
@@ -14,6 +15,7 @@ function App(){
 
 
   const saveOpen = ()=>{
+    /*
     const content = JSON.stringify(data);
     const element = document.createElement("a");
     const blob = new Blob([content], {type: "application/json"});
@@ -25,12 +27,15 @@ function App(){
     element.style.display = 'none';
     element.click();
     URL.revokeObjectURL(element.href);
+    */
+    window.ipcRenderer.send('save_data',{"data":data});
   }
 
 
   const loadOpen = ()=>{
     const element = document.createElement("input");
     element.type = "file";
+    element.accept = ".json";
     element.addEventListener("change",async event =>{
       
       let object = await new Promise((resolve, reject) => {
@@ -64,7 +69,7 @@ function App(){
    
   const fetch_data = async(address)=> {
     
-    if(rpc && address && state != "loading"){
+    if(rpc && address && state !== "loading"){
       setState("loading");
     
       let result = await window.ipcRenderer.invoke("get_data",{ "rpc":rpc,"address": address })

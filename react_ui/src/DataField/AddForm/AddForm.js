@@ -18,7 +18,7 @@ function AddForm(props){
     let weth = document.getElementById("weth_i").value
     let tokens = document.getElementById("tokens_i").value
     
-    if(pa < 0 || pb < 0 || price < 0 || weth <0 || tokens < 0 || pa == pb)
+    if(pa < 0 || pb < 0 || price < 0 || weth <0 || tokens < 0 || pa === pb)
       return
 
     let lx;
@@ -53,13 +53,13 @@ function AddForm(props){
         document.getElementById("weth_i").value = 0;
       else if(price <= pa)
         document.getElementById("tokens_i").value = 0;
-      else if(fieldAct == "ETH")
+      else if(fieldAct === "ETH")
       {
           let tokens = weth*sq(price)*sq(pb)*(sq(price)-sq(pa))/(sq(pb)-sq(price));
           document.getElementById("tokens_i").value = tokens;
       }
         
-      else if(fieldAct == "tokens")
+      else if(fieldAct === "tokens")
       {
           let weth = tokens*(sq(pb)-sq(price))/(sq(price)*sq(pb)*(sq(price)-sq(pa)));
           document.getElementById("weth_i").value = weth;
@@ -133,11 +133,11 @@ function AddForm(props){
   }
   else{
     return(
-      <tr style = {{"textAlign":'left'}}>
+      <tr style = {{"textAlign":'right'}}>
                   
         <td></td> 
-        <td></td>
-        <td ><a  href ="#" onClick={()=>setFormShow(true)}>Add</a></td>
+        <td><a  href ="#" onClick={()=>setFormShow(true)}>Add</a></td>
+        <td ></td>
        
         <td></td>
         <td></td>
