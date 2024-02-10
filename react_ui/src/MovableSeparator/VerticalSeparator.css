@@ -1,6 +1,6 @@
 #drag_container{
     height:100vh;
-    width:100%;
+    width:100vw;
     display:flex;
     flex:auto;
     flex-direction: column;
@@ -10,8 +10,12 @@
 
 #top
 {
-    height:80%;
+   
+    width:100vw;
+    height:60%;
     overflow-y: auto;
+    max-height:80%;
+    min-height:10% ;
 }
 
 #dragMe {
@@ -26,9 +30,11 @@
 
 #bottom{
     flex:auto;
+    display: flex;
+    height:39%;
+    max-height:90%;
     min-height:20%;
-    height:100%;
-    position:relative;
-    width:100%;
+    width:100vw;
+    max-width:100vw;
    
 }

@@ -1,34 +1,45 @@
 #drag_container{
-    height:100vh;
-    width:100%;
+
     display:flex;
-    flex:auto;
-    flex-direction: row;
     overflow: hidden;
+    flex-direction: row;
+    height:100%;
+    width:100%;
+    flex-wrap: wrap;
+    max-height:100%;
+    max-width:100%;
 
 }
 
 #left
 {
-    height:80%;
-    overflow-y: auto;
+    padding-top:20px;
+    flex:auto;
+    height:100%;
+    width:49%;
+    max-width:90%;
+    min-width:10%;
+    max-height:100%;
+    position:relative;
+    
 }
 
-#dragMe {
-    cursor: ns-resize;
+#dragMeH {
 
-    user-select: none;
-    height : 1px;
+    cursor: ew-resize;
+    width : 1px;
+    height:100%;
     background-color:rgb(189, 189, 189);
-    
 }
 
 
 #right{
+    padding-top:20px;
     flex:auto;
-    min-height:20%;
     height:100%;
     position:relative;
-    width:100%;
-   
+    width:49%;
+    max-height:100%;
+    max-width:90%;
+    min-width:10%;
 }

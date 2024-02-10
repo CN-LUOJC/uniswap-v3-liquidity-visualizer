@@ -3,7 +3,7 @@ import SettingsBar from './SettingsBar/SettingsBar';
 import DataField from './DataField/DataField';
 import Charts from './Charts/Charts';
 import './App.css'
-import MovableSeparator from './MovableSeparator/VerticalSeparator';
+import VerticalSeparator from './MovableSeparator/VerticalSeparator';
 
 
 

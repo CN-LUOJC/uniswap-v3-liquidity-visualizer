@@ -1,6 +1,7 @@
 import React from 'react';
 import './Charts.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import HorizontalSeparator from '../MovableSeparator/HorizontalSeparator'
 
 import {
   Chart as ChartJS,
@@ -233,9 +234,9 @@ scales: {
 
     return(
       <div id="chart_cont">
-        <div className="charts"><Scatter  data={liqData} options={liqOptions} /></div>
-        
-        <div className="charts"><Scatter  data={varData} options={varOptions} /></div>
+
+        <HorizontalSeparator left = {<Scatter  data={liqData} options={liqOptions} />}
+                              right = {<Scatter  data={varData} options={varOptions} />} />
         
       </div>
     )

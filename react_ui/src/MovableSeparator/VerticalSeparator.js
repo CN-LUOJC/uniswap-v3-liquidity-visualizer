@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import './MovableSeparator.css'
+import './VerticalSeparator.css';
+import $ from 'jquery';
 
 
 
@@ -12,6 +13,8 @@ function VerticalSeparator(props){
     const topSide = resizer.previousElementSibling;
     const bottomSide = resizer.nextElementSibling;
 
+    const max_height = parseInt($(topSide).css('max-height'));
+    const min_height = parseInt($(topSide).css('min-height'));
 
     let x = 0;
     let y = 0;
@@ -21,7 +24,7 @@ function VerticalSeparator(props){
 
    
     const mouseDownHandler = function (e) {
-      
+   
         x = e.clientX;
         y = e.clientY;
         topHeight = topSide.getBoundingClientRect().height;
@@ -41,9 +44,13 @@ function VerticalSeparator(props){
         const dy = e.clientY - y;
 
         const newTopHeight = ((topHeight + dy) * 100) / resizer.parentNode.getBoundingClientRect().height;
-        const newBottomHeight = ((bottomHeight -dy) * 100) / resizer.parentNode.getBoundingClientRect().height;
-        topSide.style.height = `${newTopHeight}%`;
-        bottomSide.style.height = `${newBottomHeight}%`;
+        //const newBottomHeight = ((bottomHeight -dy) * 100) / resizer.parentNode.getBoundingClientRect().height;
+        const newBottomHeight = 99-newTopHeight;
+        if(newTopHeight > min_height && newTopHeight < (max_height)){
+          topSide.style.height = `${newTopHeight}%`;
+          bottomSide.style.height = `${newBottomHeight}%`;
+        }
+       
         document.body.style.cursor = 'ns-resize';
         topSide.style.userSelect = 'none';
         topSide.style.pointerEvents = 'none';
@@ -59,21 +66,22 @@ function VerticalSeparator(props){
         topSide.style.removeProperty('user-select');
         topSide.style.removeProperty('pointer-events');
 
-        topSide.style.removeProperty('user-select');
-        topSide.style.removeProperty('pointer-events');
+        bottomSide.style.removeProperty('user-select');
+        bottomSide.style.removeProperty('pointer-events');
 
       
         document.removeEventListener('mousemove', mouseMoveHandler);
         document.removeEventListener('mouseup', mouseUpHandler);
       };
-    
+
+          
     },[])
 
 
     return(
         <div id = "drag_container" >
         <div id = "top" >{props.top}</div>
-        <div id = "dragMe" tabIndex="1" className="resizer"></div>
+        <div id = "dragMe" className="resizer"></div>
         <div id = "bottom" >{props.bottom}</div>
         </div>
     )
