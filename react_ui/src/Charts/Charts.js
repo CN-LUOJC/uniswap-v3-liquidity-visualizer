@@ -1,19 +1,17 @@
 import React from 'react';
 import './Charts.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import HorizontalSeparator from '../MovableSeparator/HorizontalSeparator'
 
-import {
-  Chart as ChartJS,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend
-} from "chart.js/auto";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Chart from "chart.js/auto";
 import {Scatter} from 'react-chartjs-2'
-//import 'bootstrap/dist/js/bootstrap.min.js'; 
-//import 'jquery/dist/jquery.min.js';
+import MovableDivider from '../MovableDivider/MovableDivider';
+
+import("chartjs-plugin-zoom").then((plugin) => {
+  Chart.register(plugin.default);
+});
+
+
 
 const MAX_PRICE = 10**15;
 const MIN_PRICE = 10**-15; 
@@ -152,9 +150,23 @@ function Charts(props){
   }
 
   let liqOptions = {
+    
     maintainAspectRatio: false,
     aspectRatio:1,
     plugins: {
+      zoom: {
+        zoom: {
+          wheel: {
+            enabled: true, 
+          },
+        },
+        mode: 'xy',
+        pan: {
+          enabled: true,
+          mode: 'xy',
+        },
+      },
+      
       legend: {
           display: false 
       }
@@ -205,8 +217,20 @@ let varData = {
 
 let varOptions = {
 maintainAspectRatio: false,
-aspectRatio:1,
+responsive:true,
 plugins: {
+  zoom: {
+        zoom: {
+          wheel: {
+            enabled: true, 
+          },
+        },
+        mode: 'xy',
+        pan: {
+          enabled: true,
+          mode: 'xy',
+        },
+      },
   legend: {
       display: false 
   }
@@ -231,13 +255,12 @@ scales: {
 }
 }
   
-
     return(
       <div id="chart_cont">
+        <MovableDivider dir = "vertical" first = {<Scatter  data={liqData} options={liqOptions} />}
+                              second = {<Scatter  data={varData} options={varOptions} />} 
+                              style_first = {{"padding-top":"10px"}} style_second = {{"padding-top":"10px"}}/>
 
-        <HorizontalSeparator left = {<Scatter  data={liqData} options={liqOptions} />}
-                              right = {<Scatter  data={varData} options={varOptions} />} />
-        
       </div>
     )
   }

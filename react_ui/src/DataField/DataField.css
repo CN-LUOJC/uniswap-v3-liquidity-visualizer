@@ -1,8 +1,13 @@
 #data_container{
-    
-    overflow:hidden;
- 
+    overflow-y:hidden;
 }
+
+#data_container::-webkit-scrollbar {
+    height:0; 
+    width:0;
+
+}
+
 td {
     background-color: transparent !important;
 }

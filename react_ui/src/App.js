@@ -3,7 +3,7 @@ import SettingsBar from './SettingsBar/SettingsBar';
 import DataField from './DataField/DataField';
 import Charts from './Charts/Charts';
 import './App.css'
-import VerticalSeparator from './MovableSeparator/VerticalSeparator';
+import MovableDivider from './MovableDivider/MovableDivider';
 
 
 
@@ -101,9 +101,10 @@ function App(){
   return(
       <div className="App">
           <SettingsBar setRpc ={setRpc} fetchData = {fetch_data} saveOpen ={saveOpen} loadOpen={loadOpen}/>
-          <VerticalSeparator 
-          top = {<DataField state = {state} data = {data} toggleShow ={toggleShow} addPos={addPos} delPos={delPos}/>}
-          bottom = {<Charts state = {state} data = {data}/>}
+          <MovableDivider dir="horizontal"
+          first = {<DataField state = {state} data = {data} toggleShow ={toggleShow} addPos={addPos} delPos={delPos}/>}
+          second = {<Charts state = {state} data = {data} />}
+          style_first = {{"overflow-y":"auto","height":"59%"}} style_second = {{"height":"39%"}}
           />
          
       </div>

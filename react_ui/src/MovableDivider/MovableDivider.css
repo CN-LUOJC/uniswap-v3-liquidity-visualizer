@@ -1,0 +1,106 @@
+.drag_containerV{
+
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height:100%;
+    width:100%;
+    overflow: hidden;
+}
+
+.drag_containerH{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height:100%;
+    width:100%;
+    overflow: hidden;
+}
+
+.firstV
+{
+    flex:auto;
+    position:relative;
+    overflow: hidden;
+    height:100%;
+    
+    width:49%;
+    max-width:80%;
+    min-width:20%;
+    
+}
+
+.firstH
+{
+    flex:auto;
+    position:relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width:100%;
+    height:49%;
+    max-height:80%;
+    min-height:20% ;
+   
+}
+
+.dragMeLineV{
+    background-color:rgb(189, 189, 189);
+    height:100%;
+    width:2px;
+    overflow: visible;
+    
+}
+
+.dragMeV{
+    background-color:transparent;
+    cursor: ew-resize;
+    user-select: none;
+    height:100%;
+    width:6px;
+    left:-3px;
+    position: relative;
+
+}
+
+.dragMeLineH{
+    height : 2px;
+    background-color:rgb(189, 189, 189);
+    width:100%;
+    overflow: visible;
+    position: relative;
+
+}
+
+.dragMeH {
+    cursor: ns-resize;
+    user-select: none;
+    height : 6px;
+    top:-3px;
+    width:100%;
+    background-color:transparent;
+    position: relative;
+    
+}
+
+
+
+.secondV{
+    flex:auto;
+    position:relative;
+    overflow: hidden;
+    height:100%;
+    width:49%;
+    max-width:80%;
+    min-width:20%;
+}
+
+.secondH{
+
+    flex:auto;
+    overflow: hidden;
+    position:relative;
+    height:49%;
+    max-height:80%;
+    min-height:20%;
+    width:100%;
+}
