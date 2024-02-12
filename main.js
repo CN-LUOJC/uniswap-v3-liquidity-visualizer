@@ -78,7 +78,7 @@ function createWindow(){
     ? 'http://localhost:3000'
     : `file://${path.join(app.getAppPath(), '../ui/index.html')}`;
   
-  mainWindow.setTitle('V3 Liquidity Optimizer');
+  mainWindow.setTitle('V3 Liquidity Visualizer');
   
   mainWindow.removeMenu();
   mainWindow.loadURL(startURL);

@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-document.title = "V3 Liquidty Optimizer"
+document.title = "V3 Liquidty Visualizer"
 root.render(
   <React.StrictMode>
     <App />

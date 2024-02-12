@@ -19,8 +19,8 @@ function SettingsBar(props){
   return(
       <div id="nav_container" className="maincontainer">
           <nav class="navbar navbar-icon-top navbar-dark bg-dark">
-          <span id="save"><a href="#" onClick={props.saveOpen}>Save</a>
-              <a href ="#" onClick={props.loadOpen}>Load</a></span>      
+          <span id="save"><a href ="#" onClick={props.loadOpen}>Load</a><a href="#" onClick={props.saveOpen}>Save</a>
+              </span>      
               
              
 
