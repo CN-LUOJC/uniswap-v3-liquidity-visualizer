@@ -5,3 +5,4 @@ dist/positions.json
 dist/builder-effective-config.yaml
 dist/builder-debug.yml
 positions.json
+git-filter-repo
