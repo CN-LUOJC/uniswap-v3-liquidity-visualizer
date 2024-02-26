@@ -41,17 +41,19 @@ export async function get_ids(poolAddress) {
     result = result.data.data.pool.mints;
     let ids = [];
     let logs = [];
+    let owner = [];
 
     for(let i=0;i<result.length;i++){
       let tx_res = await provider.
         getTransactionReceipt(result[i].transaction.id);
       logs.push(tx_res.logs);
+      owner.push(result[i].origin)
     }
 
     for(let i=0;i<logs.length;i++){
       for(let k =0;k<logs[i].length;k++){
         if(logs[i][k].address == NON_FONGIBLE_FACTORY_MANAGER){
-          ids.push(Number(logs[i][k].topics[3]));
+          ids.push({"id":Number(logs[i][k].topics[3]),"owner":owner[i]});
           break;
         }
       }
@@ -59,7 +61,7 @@ export async function get_ids(poolAddress) {
 
     let ids_clean = [];
     for(let id of ids){
-      if (!isNaN(id))
+      if (!isNaN(id.id))
         ids_clean.push(id);
     }
 
@@ -78,7 +80,7 @@ export async function get_positions(positionsIds){
   const positionsCalls = [];
   for (let id of positionsIds) {
     positionsCalls.push(
-        poolContract.positions(id)
+        poolContract.positions(id.id)
     )
   }
 
@@ -86,8 +88,10 @@ export async function get_positions(positionsIds){
     return false;
   })
 
-  const positionsInfos = callResponses.map((position) => {
+  const positionsInfos = callResponses.map((position,i) => {
     return {
+      owner:positionsIds[i].owner,
+      id:positionsIds[i].id,
       tickLower: position.tickLower,
       tickUpper: position.tickUpper,
       liquidity: JSBI.toNumber(JSBI.divide(

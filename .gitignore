@@ -1,8 +1,4 @@
 node_modules/
-dist/win-unpacked/
-
-dist/positions.json
-dist/builder-effective-config.yaml
-dist/builder-debug.yml
+dist/
 positions.json
 git-filter-repo
