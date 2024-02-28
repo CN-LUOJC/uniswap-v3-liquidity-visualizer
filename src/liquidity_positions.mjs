@@ -17,48 +17,80 @@ export async function connect(provider_url){
     
 }
 
-export async function get_ids(poolAddress) {
 
-  return axios.post(
-    "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3",
-    {"query": `{
-      pool(id: "${poolAddress}") {
-        mints{
-          origin
-          transaction{
-            id
+async function query_pool(poolAddress){
+  let skip = 0
+  let result = []
+  let res_length = true;
+
+  while(res_length){
+
+    await axios.post(
+      "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3",
+      {"query": `{
+        pool(id: "${poolAddress}") {
+          mints(first:1000,skip:${skip*1000}){
+            origin
+            transaction{
+              id
+            }
           }
         }
-      }
-    }`
-    },
-    {
-      headers: {
-          "Content-Type": "application/json"
-        }
-    }).then(async function(result) {
+      }`
+      },
+      {
+        headers: {
+            "Content-Type": "application/json"
+          }
+      }).then(async function(res) {
+        res = res.data.data.pool.mints;
+        res_length = res.length;
+        result.push(...res);
+        skip++;
+      }).catch(()=>{return false;})
+  }
+  return result
+}
 
-    result = result.data.data.pool.mints;
+export async function get_ids(poolAddress) {
+
+  let result = await query_pool(poolAddress)
+  
+  if(!result)
+    return false;
+
+
     let ids = [];
     let logs = [];
     let owner = [];
-
+  
     for(let i=0;i<result.length;i++){
       let tx_res = await provider.
         getTransactionReceipt(result[i].transaction.id);
       logs.push(tx_res.logs);
       owner.push(result[i].origin)
     }
-
+    const intrfc = new ethers.utils.Interface(abi);
+    console.log("Mints without NFT (directly to liquidity pool):")
     for(let i=0;i<logs.length;i++){
+      let added = false;
       for(let k =0;k<logs[i].length;k++){
+        
         if(logs[i][k].address == NON_FONGIBLE_FACTORY_MANAGER){
-          ids.push({"id":Number(logs[i][k].topics[3]),"owner":owner[i]});
-          break;
+          let args = intrfc.parseLog(logs[i][k]).args
+          if(args.tokenId){
+            let id = Number(args.tokenId)
+            if(!ids.find(i=>i.id === id))
+              ids.push({"id":id,"owner":owner[i]});
+            added = true;
+            break;
+          }
         }
       }
+      if(!added)
+        console.log(result[i].transaction.id)
     }
-
+ 
     let ids_clean = [];
     for(let id of ids){
       if (!isNaN(id.id))
@@ -66,7 +98,7 @@ export async function get_ids(poolAddress) {
     }
 
     return ids_clean;
-  }).catch(()=>{return false;})
+  
 }
 
 export async function get_positions(positionsIds){
@@ -84,18 +116,30 @@ export async function get_positions(positionsIds){
     )
   }
 
-  const callResponses = await Promise.all(positionsCalls).catch(()=>{
+  const callResponses = await Promise.allSettled(positionsCalls).then((res)=>{
+    for(let i=res.length-1;i>=0;i--){
+      
+      if(!res[i] || res[i].status=='rejected'){
+        res.splice(i,1);
+        positionsIds.splice(i,1);
+      }
+    }
+    return res
+  }).catch((e)=>{
+    console.log(e)
     return false;
   })
+  if(!callResponses)
+    return false;
 
   const positionsInfos = callResponses.map((position,i) => {
     return {
       owner:positionsIds[i].owner,
       id:positionsIds[i].id,
-      tickLower: position.tickLower,
-      tickUpper: position.tickUpper,
+      tickLower: position.value.tickLower,
+      tickUpper: position.value.tickUpper,
       liquidity: JSBI.toNumber(JSBI.divide(
-        JSBI.BigInt(position.liquidity),
+        JSBI.BigInt(position.value.liquidity),
         JSBI.BigInt(10**14)))/10000
     }
   })
