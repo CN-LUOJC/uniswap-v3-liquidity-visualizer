@@ -39,18 +39,18 @@ function createWindow(){
         json, 'utf8', ()=>{console.log});
     })
   })
- 
-   
- 
 
   ipcMain.handle('get_data', async (event, args) =>  {
     if(await connect(args.rpc)){
-      
+      console.log(args.address);
+      console.log('ready to get ids');
       let positionsIds = await get_ids(args.address);
+      console.log('positionsIds', positionsIds);
       if(!positionsIds)
         return {"error":"Pool address seems invalid..."};
 
       let data = await get_positions(positionsIds);
+
       if(!data)
         return {"error":"Can't access the address data..."};
 
